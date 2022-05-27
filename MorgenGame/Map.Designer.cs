@@ -73,6 +73,26 @@ namespace MorgenGame {
         /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap bobik1 {
+            get {
+                object obj = ResourceManager.GetObject("bobik1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap bobik2 {
+            get {
+                object obj = ResourceManager.GetObject("bobik2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap enemySprites {
             get {
                 object obj = ResourceManager.GetObject("enemySprites", resourceCulture);
@@ -201,6 +221,46 @@ namespace MorgenGame {
         internal static System.Drawing.Bitmap playerSprite4 {
             get {
                 object obj = ResourceManager.GetObject("playerSprite4", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stayedSprite1 {
+            get {
+                object obj = ResourceManager.GetObject("stayedSprite1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stayedSprite2 {
+            get {
+                object obj = ResourceManager.GetObject("stayedSprite2", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stayedSprite3 {
+            get {
+                object obj = ResourceManager.GetObject("stayedSprite3", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap stayedSprite4 {
+            get {
+                object obj = ResourceManager.GetObject("stayedSprite4", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

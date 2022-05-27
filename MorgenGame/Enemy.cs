@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace MorgenGame
 {
-    public class Enemy : IGameObject
+    class Enemy : IGameObject
     {
         public int posX { get; set; }
         public int posY { get; set; }
@@ -55,8 +55,7 @@ namespace MorgenGame
         {
             frameCount++;
             GetSpritePosition();
-            g.DrawImage(picture, new Rectangle(new Point(posX, posY),
-    new Size(sizeX, sizeY)), 144 * animeX, animeY, 140, 218, GraphicsUnit.Pixel);
+            g.DrawImage(picture, new Rectangle(posX, posY,sizeX, sizeY), 144 * animeX, animeY, 140, 218, GraphicsUnit.Pixel);
         }
 
         private void GetSpritePosition()

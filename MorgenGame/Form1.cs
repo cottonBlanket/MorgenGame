@@ -17,19 +17,31 @@ namespace MorgenGame
 {
     public partial class Form1 : Form
     {
-        public Player player;
-        public Timer timer;
+        private Player player;
+        private Timer timer;
+        private Timer headPhoneTimer;
+        private int tick = 10;
         Random rnd = new Random(); 
-        public List<Gold> goldList;
-        public List<Enemy> enemies;
-        public List<SoundPlayer> musics;
-        public List<Rectangle> textures;
-        public MenuStrip menu;
-        public int wallet = 0;
-        public Timer musicTimer;
-        public int numMusic;
-        public char lastButton;
-        public Pen pen = new Pen(Color.Red);
+        private List<Gold> goldList;
+        private List<Enemy> enemies;
+        private List<SoundPlayer> musics;
+        private List<Rectangle> textures;
+        private int wallet = 0;
+        private int headphone;
+        private Timer musicTimer;
+        private int numMusic;
+        private char lastButton;
+        private Pen pen = new Pen(Color.Red);
+        private Police topPolice;
+        private Police bottomPolice;
+        private Shop shop;
+        private Home home;
+        private Label infoLabel;
+        private Label healthLabel;
+        private Label walletLabel;
+        private Label headphoneLabel;
+        private Label isUsingHeadPhone;
+        private Button useOrBuyHeadPhone;
 
         public Form1()
         {
@@ -40,8 +52,69 @@ namespace MorgenGame
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);
             this.FormBorderStyle = FormBorderStyle.FixedToolWindow;
+            this.KeyPreview = true;
             var s = new WindowsMediaPlayer();
             Init();
+
+            infoLabel = new Label()
+            {
+                Font = new Font("Myanmar Text", 14, FontStyle.Bold),
+                AutoSize = true, 
+                Location = new Point(10, 0),
+                Text = "MorgenGame", 
+                BackColor = Color.GreenYellow
+            };
+            Controls.Add(infoLabel);
+
+            healthLabel = new Label()
+            {
+                Font = new Font("Myanmar Text", 9, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(200, 10),
+                BackColor = Color.GreenYellow
+            };
+            Controls.Add(healthLabel);
+
+            walletLabel = new Label()
+            {
+                Font = new Font("Myanmar Text", 9, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(400, 10),                
+                BackColor = Color.GreenYellow
+            };
+            Controls.Add(walletLabel);
+
+            headphoneLabel = new Label()
+            {
+                Font = new Font("Myanmar Text", 9, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(600, 10),               
+                BackColor = Color.GreenYellow
+            };
+            Controls.Add(headphoneLabel);
+
+            isUsingHeadPhone = new Label()
+            {
+                Font = new Font("Myanmar Text", 9, FontStyle.Bold),
+                AutoSize = true,
+                Location = new Point(800, 10),
+                BackColor = Color.GreenYellow
+            };
+            Controls.Add(isUsingHeadPhone);
+
+            useOrBuyHeadPhone = new Button()
+            {
+                Location = new Point(1340, 5),
+                AutoSize = true,
+                Text = "Использовать наушники",
+                Font = new Font("MV Boli", 10 ,FontStyle.Regular),
+                ForeColor = Color.Black,
+                BackColor = Color.GreenYellow,
+                FlatStyle = FlatStyle.Flat
+            };
+            Controls.Add(useOrBuyHeadPhone);
+            useOrBuyHeadPhone.Click += new EventHandler(UseHeadPhone);
+            
 
             var files = new DirectoryInfo("gameMusic");
             var file = files.GetFiles().First();
@@ -57,7 +130,7 @@ namespace MorgenGame
 
         public void Init()
         {
-            player = new Player() { posX = 20, posY =  340 };
+            player = new Player() { posX = 20, posY =  240 };
             timer = new Timer();
             this.components.Add(timer);
             goldList = new List<Gold>();
@@ -65,10 +138,17 @@ namespace MorgenGame
             CompleteEnemies();
             CompleteTextures();
             CompleteMusics();
+
+            shop = new Shop(1500, 300);
+            home = new Home(50, 280);
+
+            headPhoneTimer = new Timer();
+            headPhoneTimer.Interval = 1000;
+            headPhoneTimer.Tick += new EventHandler(GoTimer);
                         
             musicTimer = new Timer();
             musicTimer.Tick += new EventHandler(PlayMusic);
-            musicTimer.Interval = 30000;
+            musicTimer.Interval = 20;
             
 
             timer.Interval = 20;
@@ -92,8 +172,32 @@ namespace MorgenGame
                 if (player.posY + player.sizeY < 880) player.posY += 5;
                 player.Move();
             }
-            //if(!musicTimer.Enabled)
-            //    PlayMusic();
+
+            if (Collide(shop))
+            {
+                useOrBuyHeadPhone.Click -= UseHeadPhone;
+                useOrBuyHeadPhone.Click += new EventHandler(Buy);
+                useOrBuyHeadPhone.Text = "Купить наушники";
+            }
+            else
+            {
+                useOrBuyHeadPhone.Click -= Buy;
+                useOrBuyHeadPhone.Click += new EventHandler(UseHeadPhone);
+                useOrBuyHeadPhone.Text = "Использовать наушники";
+            }
+            if (tick < 0)
+            {
+                headPhoneTimer.Stop();
+                tick = 10;
+            }
+            if(bottomPolice != null)
+                bottomPolice.Move();
+            if (topPolice != null)
+                topPolice.Move();
+            topPolice = new Police(500, 30, 0);
+            topPolice.Move();
+            //SpawnPolice();
+            UpdateLabels();
             StartMusicTimer();
             TakeGold();
             SpawnGold();
@@ -101,23 +205,53 @@ namespace MorgenGame
             Invalidate();
         }
 
+        private void SpawnPolice()
+        {
+            if (rnd.Next(1) == 0)
+                topPolice = new Police(500, 30, 0);
+            else if(rnd.Next(1) == 1)
+                bottomPolice = new Police(1650, 800, 1);
+        }
+
+        private void GoTimer(object sender, EventArgs e)
+        {
+            isUsingHeadPhone.Text = "Наушники использованы. Время: " + tick.ToString();
+            tick--;    
+        }
+
+        private void Buy(object sender, EventArgs e)
+        {
+            if(wallet >= 10)
+            {
+                wallet -= 10;
+                headphone++;
+            }
+            Invalidate();
+        }
+
+        private void UseHeadPhone(object sender, EventArgs e)
+        {
+            if(headphone > 0)
+            {
+                headphone--;
+                headPhoneTimer.Start();
+            }
+        }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
-            //g.DrawImage(Map.BackgroundImage, new Rectangle(new Point(0, 0),
-                //new Size(ClientRectangle.Width, ClientRectangle.Height)));
-            
+            g.DrawImage(Map.BackgroundImage, new Rectangle(new Point(0, 0),
+                new Size(ClientRectangle.Width, ClientRectangle.Height)));
 
-            foreach(var gold in goldList)
+            foreach (var gold in goldList)
                 gold.PlayAnimation(g);
             foreach (var enemy in enemies)
                 enemy.PlayAnimation(g);
-
-            var a = player.health / 10;
-            g.DrawString(player.health > 0 ?
-                a.ToString() : "GameOver", Font, new SolidBrush(System.Drawing.Color.Black), 100, 100);
-            g.DrawString(wallet.ToString(), Font, new SolidBrush(System.Drawing.Color.Black), 150, 100);
-
+            
+            g.FillRectangle(new SolidBrush(Color.GreenYellow), new RectangleF(0, 0, 1550, 35));
+            if(topPolice != null)
+                g.DrawImage(topPolice.picture, new Rectangle(topPolice.posX, topPolice.posY, topPolice.sizeX, topPolice.sizeY));
             g.SmoothingMode = SmoothingMode.AntiAlias;
             player.PlayAnimation(g, lastButton);
         }
@@ -125,27 +259,27 @@ namespace MorgenGame
         public void MovePlayer(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
-                {
-                    case Keys.A:
-                        lastButton = 'A';
-                        player.isMoving = true;
-                        player.moveX = -3;
-                        break;
-                    case Keys.D:
-                        lastButton = 'D';
-                        player.isMoving = true;
-                        player.moveX = 3;
-                        break;
-                    case Keys.W:
-                        lastButton = 'W';
-                        player.isMoving = true;
-                        player.moveY = -3;
-                        break;
-                    case Keys.S:
-                        lastButton = 'S';
-                        player.isMoving = true;
-                        player.moveY = 3;
-                        break;
+            {
+                case Keys.A:
+                    lastButton = 'A';
+                    player.isMoving = true;
+                    player.moveX = -3;
+                    break;
+                case Keys.D:
+                    lastButton = 'D';
+                    player.isMoving = true;
+                    player.moveX = 3;
+                    break;
+                case Keys.W:
+                    lastButton = 'W';
+                    player.isMoving = true;
+                    player.moveY = -3;
+                    break;
+                case Keys.S:
+                    lastButton = 'S';
+                    player.isMoving = true;
+                    player.moveY = 3;
+                    break;
             }
         }
 
@@ -266,7 +400,8 @@ namespace MorgenGame
 
         private void AttackPlayer(Enemy enemy)
         {
-            player.health -= 1;
+            if(!headPhoneTimer.Enabled)
+                player.health -= 1;
             var right = player.posX > enemy.posX;
             var left = player.posX < enemy.posX;
             var top = player.posY < enemy.posY;
@@ -303,6 +438,15 @@ namespace MorgenGame
         {
             if (rnd.Next(10) == 0 && goldList.Count < 20)
                 goldList.Add(new Gold(rnd.Next(300, 1300), rnd.Next(230, 620)));               
+        }
+
+        private void UpdateLabels()
+        {
+            healthLabel.Text = "Здоровье: " + (player.health / 5).ToString();
+            walletLabel.Text = "Золото: " + wallet.ToString();
+            headphoneLabel.Text = "Наушники: " + headphone.ToString();
+            if(!headPhoneTimer.Enabled)
+                isUsingHeadPhone.Text = "Наушники не используются";
         }
     }
 }

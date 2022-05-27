@@ -121,6 +121,12 @@
   <data name="BackgroundImage" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\BackgroundImage.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="bobik1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bobik1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="bobik2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\bobik2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="enemySprites" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\enemySprites.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -162,6 +168,18 @@
   </data>
   <data name="playerSprite4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\playerSprite4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stayedSprite1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\stayedSprite1.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stayedSprite2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\stayedSprite2.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stayedSprite3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\stayedSprite3.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="stayedSprite4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>Resources\stayedSprite4.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="д_клявер" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>Resources\д клявер.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

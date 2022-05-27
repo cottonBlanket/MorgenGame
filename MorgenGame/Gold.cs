@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace MorgenGame
 {
-    public class Gold : IGameObject
+    class Gold : IGameObject
     {
         public int posX { get; set; }
         public int posY { get; set; }
@@ -32,8 +32,7 @@ namespace MorgenGame
             frameCount++;
             if(frameCount > 6)
                 frameCount = 0;
-            g.DrawImage(picture, new Rectangle(new Point(posX, posY),
-                new Size(sizeX, sizeY)), 90 * frameCount, 0, 90, 90, GraphicsUnit.Pixel);
+            g.DrawImage(picture, new Rectangle(posX, posY,sizeX, sizeY), 90 * frameCount, 0, 90, 90, GraphicsUnit.Pixel);
         }
     }
 }

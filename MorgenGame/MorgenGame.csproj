@@ -55,17 +55,18 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Gold.cs" />
+    <Compile Include="Home.cs" />
     <Compile Include="IGameObject.cs" />
     <Compile Include="Map.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Map.resx</DependentUpon>
     </Compile>
-    <Compile Include="Menu.cs" />
     <Compile Include="Player.cs" />
+    <Compile Include="Police.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Wall.cs" />
+    <Compile Include="Shop.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -215,6 +216,24 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\playerSprite1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stayedSprite4.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stayedSprite3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stayedSprite2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stayedSprite1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bobik2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\bobik1.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
