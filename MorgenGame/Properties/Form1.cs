@@ -315,7 +315,7 @@ namespace MorgenGame
 
         private void SpawnGold()
         {
-            if (rnd.Next(10) == 0 && goldList.Count < 20)
+            if (rnd.Next(10) == 0 && goldList.Count < 10)
                 goldList.Add(new Gold(rnd.Next(300, 1300), rnd.Next(230, 620)));
         }
 
@@ -608,12 +608,15 @@ namespace MorgenGame
             winStateControls.Add(BackButton);
 
             infoMenuLabel = ControlExtention.InitLabel
-                (infoMenuLabel, 700, 100, font, Color.Blue, Color.Gray, "Супер игра");
+                (infoMenuLabel, 300, 100, font, Color.Transparent, Color.Black, "Ваша задача:\nПринести домой наушники\nИх можно приобрести в магазине\n" +
+                "Чтобы выиграть необходимо иметь трое наушников\nСтоимость одних наушников 10 монет\nНа карте присутствуют враги\n" +
+                "Если вы находитесь рядом с ними,\nто они начинают вас преследовать,\nа также наносить вам урон\nОстерегайтесь их\n" +
+                "Управляйте игроком кнопками WASD\n\nУДАЧИ!!!");
             Controls.Add(infoMenuLabel);
             infoMenuControls.Add(infoMenuLabel);
 
             winLabel = ControlExtention.InitLabel
-                (winLabel, 700, 100, font, Color.Blue, Color.Gray, "Вы выиграли");
+                (winLabel, 700, 400, font, Color.Transparent, Color.Black, "Вы выиграли");
             Controls.Add(winLabel);
             winStateControls.Add(winLabel);
             winLabel.Hide();
