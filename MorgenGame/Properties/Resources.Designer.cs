@@ -196,15 +196,6 @@ namespace MorgenGame.Properties {
         }
         
         /// <summary>
-        ///   Поиск локализованного ресурса типа System.IO.UnmanagedMemoryStream, аналогичного System.IO.MemoryStream.
-        /// </summary>
-        internal static System.IO.UnmanagedMemoryStream MORGENSHTERN___POSOSI_69827135_online_audio_convert_com_ {
-            get {
-                return ResourceManager.GetStream("MORGENSHTERN___POSOSI_69827135_online_audio_convert_com_", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon morgg {

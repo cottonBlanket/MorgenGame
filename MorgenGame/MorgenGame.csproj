@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\ControlExtention.cs" />
     <Compile Include="Model\GameState.cs" />
     <Compile Include="View\Enemy.cs" />
     <Compile Include="Properties\Form1.cs">
@@ -129,9 +130,7 @@
   <ItemGroup>
     <None Include="Others\MorgenGame__1_-removebg-preview.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="BackgroundImage.png" />
   </ItemGroup>

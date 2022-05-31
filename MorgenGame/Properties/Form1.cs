@@ -130,7 +130,7 @@ namespace MorgenGame
                 case GameState.ActiveGame:
                     HideListControls(mainMenuControls);
                     ShowListControls(activeGameControls);
-                    Init();
+                    Start();
                     break;
                 case GameState.WinGame:
                     HideListControls(activeGameControls);
@@ -164,7 +164,7 @@ namespace MorgenGame
         #endregion MenuControls
 
         #region ActiveGame
-        public void Init()
+        public void Start()
         {
             this.KeyDown += new KeyEventHandler(MovePlayer);
             this.KeyUp += new KeyEventHandler(OnKeyUp);
@@ -547,7 +547,7 @@ namespace MorgenGame
         }
         #endregion ChangeGameState
 
-        #region Init
+        #region Start
         private void InitControls()
         {
             infoLabel = ControlExtention.InitLabel
@@ -640,54 +640,6 @@ namespace MorgenGame
             this.components.Add(mainTimer);
         }
 
-        #endregion Init
-    }
-
-    public static class ControlExtention
-    {
-        public static Label InitLabel(
-            this Label label,
-            int posX, 
-            int posY, 
-            Font font, 
-            Color backColor, 
-            Color foreColor, 
-            string text = null)
-        {
-            label = new Label()
-            {
-                Location = new Point(posX, posY),
-                Font = font,
-                BackColor = backColor,
-                ForeColor = foreColor,
-                Text = text,
-                AutoSize = true
-            };
-            return label;
-        }
-
-        public static Button InitButton(
-            this Button button,
-            int posX,
-            int posY,
-            Font font,
-            Color backColor,
-            Color foreColor,
-            string text,
-            Action<object, EventArgs> buttonEvent)
-        {
-            button = new Button()
-            {
-                Location = new Point(posX, posY),
-                Font = font,
-                BackColor = backColor,
-                ForeColor = foreColor,
-                Text = text,
-                FlatStyle = FlatStyle.Flat,
-                AutoSize = true
-            };
-            button.Click += new EventHandler(buttonEvent);
-            return button;
-        }
+        #endregion Start
     }
 }

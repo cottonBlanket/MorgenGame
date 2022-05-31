@@ -160,9 +160,6 @@
   <data name="MorgenGame__1__removebg_preview" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Others\MorgenGame__1_-removebg-preview.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="MORGENSHTERN___POSOSI_69827135_online_audio_convert_com_" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Musics\MORGENSHTERN_-_POSOSI_69827135(online-audio-convert.com).wav;System.IO.MemoryStream, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="morgg" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Icons\morgg.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
