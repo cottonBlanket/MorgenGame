@@ -42,24 +42,24 @@ namespace MorgenGame
         #endregion GameField
 
         #region MenuField
-        private Timer mainTimer;
-        private Label infoMenuLabel;
-        private Label infoLabel;
-        private Label healthLabel;
-        private Label walletLabel;
-        private Label headphoneLabel;
-        private Label isUsingHeadPhone;
-        private Label startLabel;
-        private Label winLabel;
-        private List<Control> mainMenuControls;
-        private List<Control> infoMenuControls;
-        private List<Control> activeGameControls;
-        private List<Control> winStateControls;
-        private Button BackButton;
-        private Button useOrBuyHeadPhone;
-        private Button startGameButton;
-        private Button exitButton;
-        private Button infoButton;
+        private Timer mainTimer;//главный таймер игры
+        private Label infoMenuLabel;//лэйбл инофрмации
+        private Label infoLabel;//лэйбл названию игры
+        private Label healthLabel;//лэйбл здоровья игрока
+        private Label walletLabel;//лэйбл количество собранного золота
+        private Label headphoneLabel;//лэйбл количества собранных наушников
+        private Label isUsingHeadPhone;//лэйбл использования наушников
+        private Label startLabel;//название игры на главном меню
+        private Label winLabel;//информация о выигрыше
+        private List<Control> mainMenuControls;//контроллеры в главном меню
+        private List<Control> infoMenuControls;//контроллеры в меню инофрмации
+        private List<Control> activeGameControls;//контроллеры в акттивной игре
+        private List<Control> winStateControls;//контроллеры при выигранной игре
+        private Button BackButton;//кнопка в главное меню
+        private Button useOrBuyHeadPhone;//кнопка купить или использовать нашуники
+        private Button startGameButton;//кнопка начать игру
+        private Button exitButton;//кнопка выйти из игры
+        private Button infoButton;//кнопка зайти в меню инФОРМАЦИИ
         #endregion MenuField
 
         /// <summary>
