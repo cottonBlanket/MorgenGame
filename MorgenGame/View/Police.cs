@@ -6,6 +6,7 @@ using System.Drawing;
 
 namespace MorgenGame
 {
+    //недоработанный класс
     class Police : IGameObject
     {
         public int posX { get; set; }
