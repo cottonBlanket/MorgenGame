@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
@@ -9,34 +9,36 @@ using System.IO;
 
 namespace MorgenGame
 {
+    /// <summary>
+    /// главный класс оконного приложения
+    /// </summary>
     public partial class Form1 : Form
     {             
-        Random rnd = new Random();
-        private Pen pen = new Pen(Color.Red);
-        private Font font = new Font("MV Boli", 24, FontStyle.Bold);
-        private Font gameLabelFont = new Font("Myanmar Text", 9, FontStyle.Bold);
-        private GameState gameState;
-        private Image backImg;
+        Random rnd = new Random();//объект для взятия случайных значений
+        private Font font = new Font("MV Boli", 24, FontStyle.Bold);//тип шрифта для меню лэйблов
+        private Font gameLabelFont = new Font("Myanmar Text", 9, FontStyle.Bold);//тип шрифта для игровых лэйблов
+        private GameState gameState;//статус игры
+        private Image backImg;//задний фон игры
 
         #region GameField
-        private Player player;
-        private Timer gameTimer;
-        private Timer headPhoneTimer;
-        private int tick = 10;
-        private List<Gold> goldList;
-        private List<Enemy> enemies;
-        private List<SoundPlayer> musics;
-        private List<Rectangle> textures;
-        private int wallet = 0;
-        private int headphone;
-        private Timer musicTimer;
-        private int numMusic;
-        private char lastButton;        
-        private Police topPolice;
-        private Police bottomPolice;
-        private Shop shop;
-        private Home home;
-        private bool isPlayMusic;
+        private Player player;//игрок
+        private Timer gameTimer;//таймер при активной иигре
+        private Timer headPhoneTimer;//таймер для счета наушников
+        private int tick = 10;//для отображения секунд действия наушников
+        private List<Gold> goldList;//список монет на карте
+        private List<Enemy> enemies;//список врагов на карте
+        //private List<SoundPlayer> musics;
+        private List<Rectangle> textures;//список текстур
+        private int wallet = 0;//количнство собранных монет
+        private int headphone;//количество купленных наушников
+        //private Timer musicTimer;
+        //private int numMusic;
+        private char lastButton;//последняя нажатая клавиша      
+        //private Police topPolice;
+        //private Police bottomPolice;
+        private Shop shop;//магазин
+        private Home home;//дом
+        //private bool isPlayMusic;
         #endregion GameField
 
         #region MenuField
@@ -60,7 +62,9 @@ namespace MorgenGame
         private Button infoButton;
         #endregion MenuField
 
-
+        /// <summary>
+        /// конструктор формы
+        /// </summary>
         public Form1()
         {
             InitializeComponent();
@@ -98,6 +102,9 @@ namespace MorgenGame
             Invalidate();
         }
 
+        /// <summary>
+        /// инициализирует все списки, а также игрока
+        /// </summary>
         private void InitLists()
         {
             mainMenuControls = new List<Control>();
@@ -111,6 +118,11 @@ namespace MorgenGame
 
 
         #region MenuControl
+        /// <summary>
+        /// обновляет статус игры
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void GameUpdate(object sender, EventArgs e)
         {           
             switch(gameState)
@@ -141,6 +153,9 @@ namespace MorgenGame
             Invalidate();
         }
 
+        /// <summary>
+        /// задает параметрам игры начальные значения
+        /// </summary>
         private void RestartGame()
         {
             goldList.Clear();
@@ -150,12 +165,20 @@ namespace MorgenGame
             lastButton = default;
         }
 
+        /// <summary>
+        /// скрывает список контроллеров
+        /// </summary>
+        /// <param name="listControl">список контроллеров</param>
         private void HideListControls(List<Control> listControl)
         {
             foreach (var control in listControl)
                 control.Hide();
         }
 
+        /// <summary>
+        /// отображает список контроллеров
+        /// </summary>
+        /// <param name="listControl">список контроллеров</param>
         private void ShowListControls(List<Control> listControl)
         {
             foreach (var control in listControl)
@@ -164,6 +187,9 @@ namespace MorgenGame
         #endregion MenuControls
 
         #region ActiveGame
+        /// <summary>
+        /// запускает игру
+        /// </summary>
         public void Start()
         {
             this.KeyDown += new KeyEventHandler(MovePlayer);
@@ -177,6 +203,10 @@ namespace MorgenGame
         }
 
         #region Paint
+        /// <summary>
+        /// отрисовывает все элементы игры
+        /// </summary>
+        /// <param name="e">данные для события</param>
         protected override void OnPaint(PaintEventArgs e)
         {
             var g = e.Graphics;
@@ -197,7 +227,11 @@ namespace MorgenGame
             }
         }
         #endregion Paint
-
+        /// <summary>
+        /// обновляет внутриигровой процесс
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void Update(object sender, EventArgs e)
         {
             MovePlayer();
@@ -216,12 +250,18 @@ namespace MorgenGame
         }
 
         #region UpdateMethods
+        /// <summary>
+        /// если игрок  жив и находится в движении, то изменяет положение игрока
+        /// </summary>
         private void MovePlayer()
         {
             if (player.isMoving && player.health > 0)
                 player.Move();
         }
 
+        /// <summary>
+        /// проверяет заходит ли игрок на текстуры, и сдвигает его обратно
+        /// </summary>
         private void IsCollideTextures()
         {
             foreach (var texture in textures)
@@ -238,6 +278,9 @@ namespace MorgenGame
             }
         }
 
+        /// <summary>
+        /// изменяет событие кнопки если игрок находится рядом с магазино
+        /// </summary>
         private void IsAroundShop()
         {
             if (Collide(shop))
@@ -254,6 +297,9 @@ namespace MorgenGame
             }
         }
 
+        /// <summary>
+        /// останавливает таймер действия наушников
+        /// </summary>
         private void StopHeadPhoneTimer()
         {
             if (tick < 0)
@@ -279,6 +325,9 @@ namespace MorgenGame
         //        bottomPolice = new Police(1650, 800, 1);
         //}
 
+        /// <summary>
+        /// обновляет надписи лэйблов внутри игры
+        /// </summary>
         private void UpdateLabels()
         {
             healthLabel.Text = "Здоровье: " + (player.health / 5).ToString();
@@ -299,6 +348,9 @@ namespace MorgenGame
         //    }
         //}
 
+        /// <summary>
+        /// отвечает за подбор игроком золота в игре
+        /// </summary>
         private void TakeGold()
         {
             var takingGold = new List<Gold>();
@@ -313,12 +365,20 @@ namespace MorgenGame
                 goldList.Remove(gold);
         }
 
+        /// <summary>
+        /// отвечает за появление золота на карте
+        /// </summary>
         private void SpawnGold()
         {
             if (rnd.Next(10) == 0 && goldList.Count < 10)
                 goldList.Add(new Gold(rnd.Next(300, 1300), rnd.Next(230, 620)));
         }
 
+        /// <summary>
+        /// отвечает за движение врагов
+        /// если вблизи игрока, то к нему,
+        /// иначе в случайном направлении
+        /// </summary>
         public void MoveEnemy()
         {
             foreach (var enemy in enemies)
@@ -334,6 +394,10 @@ namespace MorgenGame
             Invalidate();
         }
 
+        /// <summary>
+        /// изменяет положения врага в сторону игрока
+        /// </summary>
+        /// <param name="enemy">враг</param>
         private void AttackPlayer(Enemy enemy)
         {
             if (!headPhoneTimer.Enabled)
@@ -348,6 +412,9 @@ namespace MorgenGame
             enemy.posY += top ? -3 : down ? 3 : 0;
         }
 
+        /// <summary>
+        /// отвечает за выигранную ситацию в игре
+        /// </summary>
         private void WinGame()
         {
             if(Collide(home))
@@ -356,12 +423,23 @@ namespace MorgenGame
         }
         #endregion UpdateMethods
 
+        /// <summary>
+        /// события по тику таймера наушников
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void GoTimer(object sender, EventArgs e)
         {
             isUsingHeadPhone.Text = "Наушники использованы. Время: " + tick.ToString();
             tick--;
         }
 
+        /// <summary>
+        /// события по клику кнопки купить наушники
+        /// отвечает за покупку в магазине
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void Buy(object sender, EventArgs e)
         {
             if (wallet >= 10)
@@ -369,8 +447,14 @@ namespace MorgenGame
                 wallet -= 10;
                 headphone++;
             }
-            Invalidate();
         }
+
+        /// <summary>
+        /// событие по нажатию клавиш
+        /// отвечает за движение игрока
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         public void MovePlayer(object sender, KeyEventArgs e)
         {
             player.isMoving = true;
@@ -395,6 +479,12 @@ namespace MorgenGame
             }
         }
 
+        /// <summary>
+        /// событие по отпусканию клавиш
+        /// отвечает за остановку движения игрока
+        /// </summary>
+        /// <param name="sender">тотправитель</param>
+        /// <param name="e">данные</param>
         public void OnKeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
@@ -419,6 +509,9 @@ namespace MorgenGame
             player.isMoving = false;
         }
 
+        /// <summary>
+        /// отвечает за движение игрока обратно при столкновении с текстурами
+        /// </summary>
         private void CollideTextures()
         {
             player.isMoving = false;
@@ -460,6 +553,12 @@ namespace MorgenGame
         //    }    
         //}
 
+        /// <summary>
+        /// проверяет сталкивается ли игрок с передаваемым объектом
+        /// </summary>
+        /// <param name="obj">объект</param>
+        /// <param name="border">дополнительные рамки пересечений</param>
+        /// <returns>истина - если сталкиваются, ложь - если нет</returns>
         private bool Collide(IGameObject obj, int border = 0)
         {
             var playerRect = new Rectangle(player.posX, player.posY, player.sizeX, player.sizeY);
@@ -468,6 +567,12 @@ namespace MorgenGame
             return playerRect.IntersectsWith(enemyRect);
         }
 
+        /// <summary>
+        /// событие при нажатии кнопки использловать наушники
+        /// отвечает за использование наушников
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void UseHeadPhone(object sender, EventArgs e)
         {
             if (headphone > 0)
@@ -479,6 +584,9 @@ namespace MorgenGame
         #endregion ActiveGame
         
         #region Completed
+        /// <summary>
+        /// заполняет список текстур
+        /// </summary>
         private void CompleteTextures()
         {
             textures = new List<Rectangle>()
@@ -491,6 +599,9 @@ namespace MorgenGame
             };
         }
 
+        /// <summary>
+        /// заполняет список врагов
+        /// </summary>
         private void CompleteEnemies()
         {
             enemies.Add(new Enemy(420, 180));
@@ -501,45 +612,69 @@ namespace MorgenGame
             enemies.Add(new Enemy(800, 500));
         }
 
-        private void CompleteMusics(DirectoryInfo files)
-        {
-            var musicFiles = files.GetFiles();
+        //private void CompleteMusics(DirectoryInfo files)
+        //{
+        //    var musicFiles = files.GetFiles();
 
-            musics = new List<SoundPlayer>
-            {
-                new SoundPlayer(Properties.Resources.gameMusic1)
-                { SoundLocation = musicFiles[1].FullName },
-                new SoundPlayer(Properties.Resources.gameMusic2)
-                { SoundLocation = musicFiles[2].FullName },
-                new SoundPlayer(Properties.Resources.gameMusic3)
-                { SoundLocation = musicFiles[3].FullName },
-                new SoundPlayer(Properties.Resources.gameMusic4)
-                { SoundLocation = musicFiles[4].FullName },
-                new SoundPlayer(Properties.Resources.gameMusic5)
-                { SoundLocation = musicFiles[5].FullName },
-            };
-        }
+        //    musics = new List<SoundPlayer>
+        //    {
+        //        new SoundPlayer(Properties.Resources.gameMusic1)
+        //        { SoundLocation = musicFiles[1].FullName },
+        //        new SoundPlayer(Properties.Resources.gameMusic2)
+        //        { SoundLocation = musicFiles[2].FullName },
+        //        new SoundPlayer(Properties.Resources.gameMusic3)
+        //        { SoundLocation = musicFiles[3].FullName },
+        //        new SoundPlayer(Properties.Resources.gameMusic4)
+        //        { SoundLocation = musicFiles[4].FullName },
+        //        new SoundPlayer(Properties.Resources.gameMusic5)
+        //        { SoundLocation = musicFiles[5].FullName },
+        //    };
+        //}
 
         #endregion Completed
 
         #region ChangerGameState
+        /// <summary>
+        /// событие по кнопке "Как играть"
+        /// изменяет статус игры на меню информации
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void InfoButtonClick(object sender, EventArgs e)
         {           
             gameState = GameState.InfoMenu;
             Invalidate();
         }
 
+        /// <summary>
+        /// событие по кнопке "В главное меню"
+        /// изменяет статус игры на главное менюю
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void BackButtonClick(object sender, EventArgs e)
         {
             gameState = GameState.MainMenu;
             Invalidate();
         }
 
+        /// <summary>
+        /// событие по кнопке "Выход"
+        /// закрывает приложение
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void ExitButtonClick(object sender, EventArgs e)
         {
             Application.Exit();
         }
 
+        /// <summary>
+        /// событие по кнопке "Начать игру"
+        /// изменяет статус игры на активная игра
+        /// </summary>
+        /// <param name="sender">отправитель</param>
+        /// <param name="e">данные</param>
         private void StartGameClick(object sender, EventArgs e)
         {
             gameState = GameState.ActiveGame;
@@ -548,6 +683,9 @@ namespace MorgenGame
         #endregion ChangeGameState
 
         #region Start
+        /// <summary>
+        /// инициализирует все контроллеры
+        /// </summary>
         private void InitControls()
         {
             infoLabel = ControlExtention.InitLabel
@@ -602,7 +740,7 @@ namespace MorgenGame
             Controls.Add(startLabel);
 
             BackButton = ControlExtention.InitButton
-                (BackButton, 100, 30, font, Color.Transparent, Color.Blue, "В главное меню", BackButtonClick);
+                (BackButton, 100, 30, font, Color.Transparent, Color.Black, "В главное меню", BackButtonClick);
             Controls.Add(BackButton);
             infoMenuControls.Add(BackButton);
             winStateControls.Add(BackButton);
@@ -622,6 +760,9 @@ namespace MorgenGame
             winLabel.Hide();
         }
 
+        /// <summary>
+        /// инициализирует все таймеры
+        /// </summary>
         private void InitTimers()
         {
             headPhoneTimer = new Timer();
