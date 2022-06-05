@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -10,26 +10,49 @@ using System.Windows.Forms;
 
 namespace MorgenGame
 {
+    /// <summary>
+    /// класс, отвечающий за игрока
+    /// </summary>
     class Player : IGameObject
     {
+        /// <summary>
+        /// позиция по абсцисее
+        /// </summary>
         public int posX { get; set; }
+        /// <summary>
+        /// позиция по ординате
+        /// </summary>
         public int posY { get; set; }
-
+        /// <summary>
+        /// размеры по абсциссе
+        /// </summary>
         public int sizeX { get; set; }
+        /// <summary>
+        /// размеры по ординате
+        /// </summary>
         public int sizeY { get; set; }
+        /// <summary>
+        /// картинка объекта
+        /// </summary>
         public Image picture { get; set; }
 
-        public int moveX;
-        public int moveY;
-        public bool isMoving;
+        public int moveX;//изменение положения по абсциссе
+        public int moveY;//изменение положения по ординате
+        public bool isMoving;//двигается игрок или нет
 
-        public int health;
+        public int health;//здоровье игрока
 
-        public int anime;
-        public int frameCount = 0;
+        public int anime;//переменная для анимации
+        public int frameCount = 0;//количество тиков
         //Dictionary<char, Tuple<Bitmap, Bitmap>> sprites;
         //Dictionary<Bitmap, List<int>> imagesSize;
 
+        /// <summary>
+        /// конструктор класса
+        /// для инициализации игрока с заданными значениями координат
+        /// </summary>
+        /// <param name="pX">начальная позиция по абсциссе</param>
+        /// <param name="pY">начальная позиция по ординате</param>
         public Player(int pX, int pY)
         {
             posX = pX;
@@ -46,6 +69,9 @@ namespace MorgenGame
             //CompleteAnimationDictionary();
         }
 
+        /// <summary>
+        /// изменяет положение игрока
+        /// </summary>
         public void Move()
         {
             posX += moveX;
@@ -73,6 +99,11 @@ namespace MorgenGame
         //    imagesSize.Add(Map.stayedSprite4, new List<int> { 45, 0, 42, 63 });
         //}
 
+        /// <summary>
+        /// отрисовывает анимацию движения игрока
+        /// </summary>
+        /// <param name="g">объект рисования</param>
+        /// <param name="button">последняя нажатая клавиша</param>
         public void PlayAnimation(Graphics g, char button)
         {
             if (isMoving)
