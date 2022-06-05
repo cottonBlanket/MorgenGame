@@ -84,16 +84,16 @@ namespace MorgenGame
             mainTimer.Start();
             #endregion InitMenu
 
-            var files = new DirectoryInfo("gameMusic");
+            //var files = new DirectoryInfo("gameMusic");
             CompleteEnemies();
             CompleteTextures();
-            CompleteMusics(files);
+            //CompleteMusics(files);
           
-            var file = files.GetFiles().First();
-            var myGame = new SoundPlayer();
-            myGame.SoundLocation = file.FullName;
-            myGame.Load();
-            myGame.Play();
+            //var file = files.GetFiles().First();
+            //var myGame = new SoundPlayer();
+            //myGame.SoundLocation = file.FullName;
+            //myGame.Load();
+            //myGame.Play();
 
             Invalidate();
         }
